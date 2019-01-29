@@ -133,9 +133,9 @@ HideThisPCFromDesktop           # ShowThisPCOnDesktop
 # ShowControlPanelOnDesktop     # HideControlPanelFromDesktop
 ShowDesktopInThisPC             # HideDesktopFromThisPC
 ShowDesktopInExplorer           # HideDesktopFromExplorer
-HideDocumentsFromThisPC         # ShowDocumentsInThisPC
+ShowDocumentsInThisPC           # HideDocumentsFromThisPC
 ShowDocumentsInExplorer         # HideDocumentsFromExplorer
-HideDownloadsFromThisPC         # ShowDownloadsInThisPC
+ShowDownloadsInThisPC           # HideDownloadsFromThisPC
 ShowDownloadsInExplorer         # HideDownloadsFromExplorer
 HideMusicFromThisPC             # ShowMusicInThisPC
 HideMusicFromExplorer           # ShowMusicInExplorer
@@ -188,6 +188,9 @@ UninstallFaxAndScan             # InstallFaxAndScan
 ### Unpinning ###
 UnpinStartMenuTiles
 UnpinTaskbarIcons
+
+### Personal functions ###
+main
 
 ### Auxiliary Functions ###
 WaitForKey
