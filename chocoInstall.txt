@@ -14,4 +14,3 @@ cpu-z
 deluge
 steam
 autohotkey.install
-keepass

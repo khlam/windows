@@ -4,7 +4,7 @@ Function DisableServices {
 	$services = @(
 	    "diagnosticshub.standardcollector.service" # Microsoft (R) Diagnostics Hub Standard Collector Service
 	    "DiagTrack"                                # Diagnostics Tracking Service
-	    #"dmwappushservice"                         # WAP Push Message Routing Service (see known issues)
+	    #"dmwappushservice"                        # WAP Push Message Routing Service (see known issues)
 	    "HomeGroupListener"                        # HomeGroup Listener
 	    "HomeGroupProvider"                        # HomeGroup Provider
 	    "lfsvc"                                    # Geolocation Service
@@ -16,7 +16,9 @@ Function DisableServices {
 	    "TrkWks"                                   # Distributed Link Tracking Client
 	    "WbioSrvc"                                 # Windows Biometric Service
 	    #"WlanSvc"                                 # WLAN AutoConfig
-	    "WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
+		"WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
+		"XboxGipSvc"
+		"xbgm"
 	    "XblAuthManager"                           # Xbox Live Auth Manager
 	    "XblGameSave"                              # Xbox Live Game Save Service
 	    "XboxNetApiSvc"                            # Xbox Live Networking Service
@@ -70,7 +72,7 @@ Function DisableNagle{
 # Modified from: https://github.com/lord-carlos/nvidia-update
 Function UpdateNvidiaDrivers{
 	# Checking currently installed driver version
-	Write-Host "Attempting to detect currently installed driver version..."
+	Write-Host "Updating Nvidia drivers..."
 	try {  
 		$ins_version = (Get-WmiObject Win32_PnPSignedDriver | Where-Object {$_.devicename -like "*nvidia*" -and $_.devicename -notlike "*audio*"}).DriverVersion.SubString(7).Remove(1,1).Insert(3,".")
 	} catch {
