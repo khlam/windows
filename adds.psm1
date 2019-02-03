@@ -195,92 +195,58 @@ Function ChangeVolumeClassic {
 
 
 ## Install Chocolatey if not already installed
-Function InstallChocolatey {
-	$share = choco upgrade chocolatey -y
-	if($?)
-	{
-		Write-Host "Chocolatey already installed."
-	}
-	else
-	{
+Function InstallChoco {
+	Write-Host "Installing chocolatey..."
+	$error.clear()
+	try { choco }
+	catch { 
 		Write-Host -nonewline "Install chocolatey? (Y/N) "
 		$response = read-host
 		if ( $response -ne "Y" ) { return; }
 		Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	}
-}
-
-## Install all packages I use on all systems
-Function InstallChocoPkgTools {
-	$share = choco upgrade chocolatey -y
-	if($?)
-	{
-		# Assumption: If script has not been run before, then 7-zip would not have been installed.
-		if (!(Test-Path $env:ProgramFiles\7-zip\))
-		{
-			Write-Host -nonewline "Install: vlc, firefox, keepassxc, git, megasync, sumatrapdf, winscp, putty, visualstudiocode, hwmonitor, and 7-zip. Continue? (Y/N) "
-			$response = read-host
-			if ( $response -ne "Y" ) { return; }
-			choco install vlc -y
-			choco install firefox -y
-			choco install keepassxc -y
-			choco install git.install -y
-			choco install megasync -y
-			choco install sumatrapdf.install -y
-			choco install winscp -y
-			choco install putty.install -y
-			choco install visualstudiocode -y
-			choco install hwmonitor -y
-			choco install 7zip.install -y
-		}
-		else
-		{
-			Write-Host "7-Zip already installed. Assuming all primary packages are already installed."
-		}
-	}
-	else
-	{
-		Write-Host "Chocolatey is not installed."
+	if (!$error) {
+		Write-Host "Chocolatey already installed."
 	}
 }
 
-## Install all other packages I like
-Function InstallChocoPkgMisc {
-	$share = choco upgrade chocolatey -y
-	if($?)
-	{
-		# Assumption: If script has not been run before, then steam would not have been installed.
-		if (!(Test-Path ${env:ProgramFiles(x86)}\Steam\))
-		{
-			Write-Host -nonewline "Install: discord, cpu-z, deluge, autohotkey, and steam. Continue? (Y/N) "
-			$response = read-host
-			if ( $response -ne "Y" ) { return; }
-			choco install discord -y
-			choco install cpu-z -y
-			choco install deluge -y
-			choco install steam -y
-			choco install autohotkey.install -y
+## Install all packages in chocoInstall.txt
+Function InstallChocoPkgs {
+	$file = "$psscriptroot\chocoInstall.txt"
+	Write-Host "Installing all packages in $file that are not already installed..."
+	if (Test-Path $file) {
+		$toInstall = [string[]](Get-Content $file | Select-Object -Skip 3)
+		if (!($toInstall.count -eq 0)) {
+			$installed = [string[]](choco list --local-only | ForEach {"$_".Split(" ")[0]})
+			$notInstalled = $toInstall | Where {$installed -NotContains $_}
+			
+			if (!($notInstalled.count -eq 0)){
+				Write-Host "Found packages in $file that are not installed: $notInstalled"
+				Write-Host -NoNewline "Install? (Y/N)"
+				$response = read-host
+				if ( $response -ne "Y" ) { return; }
+				
+				ForEach ($j in $notInstalled) {
+					choco install $j -y
+				}
+			}else {
+				Write-Host "All packages from $file installed."
+			}
 		}
-		else
-		{
-			Write-Host "Steam installed. Assuming all misc packages are already installed."
-		}
-	}
-	else
-	{
-		Write-Host "Chocolatey is not installed."
+	}else {
+		Write-Host "Cannot find chocoInstall.txt."
 	}
 }
 
+# Update choco
 Function UpdateChoco {
-	$share = choco upgrade chocolatey -y
-	if($?)
-	{
+	Write-Host "Updating chocolatey..."
+	$error.clear()
+	try { choco }
+	catch { Write-Host "Chocolatey is not installed." }
+	if (!$error) {
+		choco upgrade chocolatey -y
 		choco upgrade all -y
-	}
-	else
-	{
-		Write-Host "Chocolatey is not installed."
 	}
 }
 
@@ -304,24 +270,4 @@ Function GamingRegSet{
 	else {
 		Write-Host "Steam is not installed. Assuming gaming performance registry tweaks are not needed."
 	}
-}
-
-Function main {
-    Write-Output ""
-    Write-Output ""
-    Write-Output " --- Executing adds.psm1 Functions ---"
-    DisableServices
-    DisableNagle
-    DisableTeleIps
-    DisableEnhancedPointerPrecision
-    DisableTransparency
-    ChangeVolumeClassic
-    GamingRegSet
-
-    InstallChocolatey
-    InstallChocoPkgTools
-    InstallChocoPkgMisc
-
-    UpdateNvidiaDrivers
-    UpdateChoco
 }
