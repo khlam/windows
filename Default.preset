@@ -199,8 +199,10 @@ ChangeVolumeClassic
 GamingRegSet
 
 InstallChoco
-InstallChocoPrograms
+InstallChocoPkgs
 UpdateChoco
+
+UpdateNvidiaDrivers
 
 ### Auxiliary Functions ###
 WaitForKey
