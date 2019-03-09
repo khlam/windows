@@ -1,0 +1,7 @@
+config.edge.skype.com
+nexusrules.officeapps.live.com
+www.google-analytics.com
+settings-win.data.microsoft.com
+vortex.data.microsoft.com
+wpad.lan
+self.events.data.microsoft.com

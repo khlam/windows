@@ -11,8 +11,19 @@ This all-in-one script would not be possible without the knowledge shared by the
 - https://gist.github.com/IntergalacticApps/675339c2b805b4c9c6e9a442e0121b1d
 - https://github.com/Nummer/Destroy-Windows-10-Spying
 
+### Hosts
+This script will append to the system hosts file, blocking all requests by redirecting these host names to `127.0.0.1`. You can change the hosts it will append in [`hosts.txt`](./hosts.txt).
+The following host names are default.
+- config.edge.skype.com
+- nexusrules.officeapps.live.com
+- www.google-analytics.com
+- settings-win.data.microsoft.com
+- vortex.data.microsoft.com
+- wpad.lan
+- self.events.data.microsoft.com
+
 ### Chocolatey
-This script uses Chocolatey to automate updating and installing windows packages. You can change the packages it installs in `chocoInstall.txt`. The following packages are default.
+This script uses Chocolatey to automate updating and installing windows packages. You can change the packages it installs in [`chocoInstall.txt`](./chocoInstall.txt). The following packages are default.
 - vlc
 - firefox
 - keepassxc
@@ -31,7 +42,7 @@ This script uses Chocolatey to automate updating and installing windows packages
 - autohotkey.install
 
 ### Search Fix [Depreciated]
-The following steps fixed Windows search. This is due to some initialization not started by some MS services that are disabled for privacy. You should not need to do this more than once. I haven't had to do this for a while, it may no longer be necessary.
+The following steps fixed Windows search. This is due to some initialization not started by some MS services that are disabled for privacy. You should not need to do this more than once. This seems to have been fixed in some Windows update.
 1. Log into another admin account
 2. Go to
     - `C:\Users\<ProblemUserName>\AppData\Local\Packages`

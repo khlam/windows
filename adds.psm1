@@ -15,13 +15,14 @@ Function DisableServices {
 	    "SharedAccess"                             # Internet Connection Sharing (ICS)
 	    "TrkWks"                                   # Distributed Link Tracking Client
 	    "WbioSrvc"                                 # Windows Biometric Service
-	    #"WlanSvc"                                 # WLAN AutoConfig
+	    "WlanSvc"                                  # WLAN AutoConfig
 		"WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
 		"XboxGipSvc"
 		"xbgm"
 	    "XblAuthManager"                           # Xbox Live Auth Manager
 	    "XblGameSave"                              # Xbox Live Game Save Service
-	    "XboxNetApiSvc"                            # Xbox Live Networking Service
+		"XboxNetApiSvc"                            # Xbox Live Networking Service
+		"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
 	)
 
 	foreach ($service in $services) {
@@ -272,4 +273,41 @@ Function GamingRegSet{
 	else {
 		Write-Host "Steam is not installed. Assuming gaming performance registry tweaks are not needed."
 	}
+}
+
+## Disable wpad service
+Function Disablewpad{
+	Write-Output "Disabling wpad DNS queries..."
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" -Name "UseDomainNameDevolution" -Type DWord -Value 0
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinHttpAutoProxySvc" -Name "Start" -Type DWord -Value 4
+}
+
+# Disable wpad DNS queries and appends all entries in hosts.txt that are not in the hosts file
+Function AppendHosts{
+	Write-Output "Appending to Hosts file..."
+    $file = "$psscriptroot\hosts.txt"
+    $HostsToWrite = [string[]](Get-Content $file | Select-Object -Skip 0)
+    if (!($HostsToWrite.count -eq 0)){
+        $hostspath="$($env:windir)\System32\drivers\etc\hosts"
+        If ((Test-Path $hostspath) -eq "True") {
+            $InHosts = @()
+            $hostsFile = Get-Content $hostspath
+            foreach ($line in $hostsFile) {
+                $ln = [regex]::Split($line, "^127.0.0.1 +")
+                if ($ln.count -eq 2) {
+                    $InHosts += $ln[1]
+                }
+            }
+        }
+        $notInstalled = $HostsToWrite | Where {$InHosts -NotContains $_}
+        if (!($notInstalled.count -eq 0)){
+            foreach ($domain in $notInstalled){
+                "`n127.0.0.1 " + $domain | Out-File -encoding ASCII -append $hostspath
+                Write-Host "Adding host $domain"
+            }
+        }
+        Write-Host "All hosts in $file set in $hostspath"
+    }else {
+        Write-Output "$file empty"
+    }
 }
