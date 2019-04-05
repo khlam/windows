@@ -1,6 +1,15 @@
 # Win10-Config
 This script removes bloatware, tidies interfaces, and increases Windows 10 performance. My modifications include combining similar projects and my preferred Windows 10 settings. Important features include automation with Chocolatey, auto-updating NVIDIA GPU drivers, removing Nagle's algorithm, and purging more telemetry services.
 
+### Run
+1. Modify the following configuration files as needed
+    - [`chocoInstall.txt`](./chocoInstall.txt)
+    - [`Default.preset](./Default.preset)
+    - [`hosts.txt`](./hosts.txt)
+    - [`telemetryIPs.txt`](./telemetryIPs.txt)
+
+2. Run [`Default.cmd`](./Default.cmd) as administrator.
+
 ### References
 This all-in-one script would not be possible without the knowledge shared by these talented individuals and teams.
 - https://github.com/Disassembler0/Win10-Initial-Setup-Script

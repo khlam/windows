@@ -70,7 +70,7 @@ Function DisableNagle{
 }
 
 # Nvidia Driver Check, cleans and installs new drivers
-# Modified from: https://github.com/lord-carlos/nvidia-update
+# Source: https://github.com/lord-carlos/nvidia-update
 Function UpdateNvidiaDrivers{
 	# Checking currently installed driver version
 	Write-Host "Updating Nvidia drivers..."
@@ -94,16 +94,11 @@ Function UpdateNvidiaDrivers{
 		return;
 	}
 
-	# Checking latest driver version from Nvidia website, internet explorer needs to have been opened atleast once to initilize Invoke-WebRequest
-	$link = Invoke-WebRequest -Uri 'https://www.nvidia.com/Download/processFind.aspx?psid=101&pfid=816&osid=57&lid=1&whql=1&lang=en-us&ctk=0' -Method GET
-	if(!($?))
-	{
-		Write-Host "Error: Something went wrong with Invoke-WebRequest, open Internet Explorer once to initlize"
-		return;
-	}
-	$version = $link.parsedhtml.GetElementsByClassName("gridItem")[2].innerText
-	Write-Host "Latest version: `t$version"
-
+	# Checking latest driver version from Nvidia website
+	$link = Invoke-WebRequest -Uri 'https://www.nvidia.com/Download/processFind.aspx?psid=101&pfid=816&osid=57&lid=1&whql=1&lang=en-us&ctk=0' -Method GET -UseBasicParsing
+	$link -match '<td class="gridItem">([^<]+?)</td>' | Out-Null
+	$version = $matches[1]
+	Write-Host "Latest version `t`t$version"
 
 	# Comparing installed driver version to latest driver version from Nvidia
 	if($version -eq $ins_version) {
