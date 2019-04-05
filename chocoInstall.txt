@@ -6,7 +6,7 @@ megasync
 sumatrapdf.install
 winscp
 putty.install
-visualstudiocode
+vscodium
 hwmonitor
 7zip.install
 discord
