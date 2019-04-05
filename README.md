@@ -4,7 +4,7 @@ This script removes bloatware, tidies interfaces, and increases Windows 10 perfo
 ### Run
 1. Modify the following configuration files as needed
     - [`chocoInstall.txt`](./chocoInstall.txt)
-    - [`Default.preset](./Default.preset)
+    - [`Default.preset`](./Default.preset)
     - [`hosts.txt`](./hosts.txt)
     - [`telemetryIPs.txt`](./telemetryIPs.txt)
 
