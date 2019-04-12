@@ -200,6 +200,8 @@ AppendHosts
 ChangeVolumeClassic
 GamingRegSet
 
+DisableF1HelpKey
+
 InstallChoco
 InstallChocoPkgs
 UpdateChoco
