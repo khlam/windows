@@ -319,3 +319,31 @@ Function DisableF1HelpKey {
 	}
 	Set-ItemProperty -Path "HKCU:\Software\Classes\TypeLib\{8cec5860-07a1-11d9-b15e-000d56bfe6ee}\1.0\0\win64" -Name "(Default)" -Value ""
 }
+
+Function NetworkTweaks {
+	Write-Output "Setting network settings..."
+	netsh interface teredo set state disabled
+	netsh interface 6to4 set state disabled
+	netsh winsock reset
+	netsh interface isatap set state disable
+	netsh int tcp set global timestamps=disabled
+	netsh int tcp set heuristics disabled
+	netsh int tcp set global autotuninglevel=disable
+	netsh int tcp set global congestionprovider=ctcp
+	netsh int tcp set supplemental Internet congestionprovider=CTCP
+	netsh int tcp set global chimney=disabled
+	netsh int tcp set global ecncapability=disabled
+	netsh int tcp set global rss=enabled
+	netsh int tcp set global rsc=disabled
+	netsh int tcp set global dca=enabled
+	netsh int tcp set global netdma=enabled
+	Disable-NetAdapterChecksumOffload -Name "*"
+	Disable-NetAdapterLso -Name "*"
+	Disable-NetAdapterRsc -Name "*"
+	Disable-NetAdapterIPsecOffload -Name "*"
+	Disable-NetAdapterPowerManagement -Name "*"
+	Disable-NetAdapterQos -Name "*"
+	
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters" -Name "EnableICSIPv6" -Type DWord -Value 0
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters" -Name "DisabledComponents" -Type DWord -Value 255
+}

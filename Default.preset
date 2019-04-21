@@ -208,5 +208,7 @@ UpdateChoco
 
 UpdateNvidiaDrivers
 
+NetworkTweaks
+
 ### Auxiliary Functions ###
 WaitForKey
