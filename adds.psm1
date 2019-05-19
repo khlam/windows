@@ -347,3 +347,19 @@ Function NetworkTweaks {
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters" -Name "EnableICSIPv6" -Type DWord -Value 0
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters" -Name "DisabledComponents" -Type DWord -Value 255
 }
+
+Function SetDefaultViewDetailed{
+	Write-Output "Setting Explorer default view to Detailed"
+	Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" -Recurse -ErrorAction SilentlyContinue
+	Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagsMRU" -Recurse -ErrorAction SilentlyContinue
+	If (!(Test-Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell")) {
+		New-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell" -Force | Out-Null
+		Set-ItemProperty -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell" -Name "FolderType" -Type String -Value "NotSpecified"
+	}
+
+	If (!(Test-Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\{7fde1a1e-8b31-49a5-93b8-6be14cfa4943}")) {
+		New-Item -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\{7fde1a1e-8b31-49a5-93b8-6be14cfa4943}" -Force | Out-Null
+		Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\{7fde1a1e-8b31-49a5-93b8-6be14cfa4943}" -Name "LogicalViewMode" -Type DWord -Value 1
+		Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\{7fde1a1e-8b31-49a5-93b8-6be14cfa4943}" -Name "Mode" -Type DWord -Value 4
+	}
+}
