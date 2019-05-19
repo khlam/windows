@@ -1,5 +1,7 @@
 # Win10-Config
-This script removes bloatware, tidies interfaces, and increases Windows 10 performance. My modifications include combining similar projects and my preferred Windows 10 settings. Important features include automation with Chocolatey, auto-updating NVIDIA GPU drivers, removing Nagle's algorithm, and purging more telemetry services.
+This script removes bloatware, tidies interfaces, and increases Windows 10 performance.
+My modifications include combining similar projects and my preferred Windows 10 settings.
+Features include application update automation with Chocolatey, cleanly updating NVIDIA GPU drivers without GEForce, disabling Nagle's algorithm, and purging more telemetry services.
 
 ### Run
 1. Modify the following configuration files as needed
@@ -22,33 +24,9 @@ This all-in-one script would not be possible without the knowledge shared by the
 
 ### Hosts
 This script will append to the system hosts file, blocking all requests by redirecting these host names to `127.0.0.1`. You can change the hosts it will append in [`hosts.txt`](./hosts.txt).
-The following host names are default.
-- config.edge.skype.com
-- nexusrules.officeapps.live.com
-- www.google-analytics.com
-- settings-win.data.microsoft.com
-- vortex.data.microsoft.com
-- wpad.lan
-- self.events.data.microsoft.com
 
 ### Chocolatey
-This script uses Chocolatey to automate updating and installing windows packages. You can change the packages it installs in [`chocoInstall.txt`](./chocoInstall.txt). The following packages are default.
-- vlc
-- firefox
-- keepassxc
-- git.install
-- megasync
-- sumatrapdf.install
-- winscp
-- putty.install
-- visualstudiocode
-- hwmonitor
-- 7zip.install
-- discord
-- cpu-z
-- deluge
-- steam
-- autohotkey.install
+This script uses Chocolatey to automate updating and installing windows packages. You can change the packages it installs in [`chocoInstall.txt`](./chocoInstall.txt).
 
 ### Search Fix [Depreciated]
 The following steps fixed Windows search. This is due to some initialization not started by some MS services that are disabled for privacy. You should not need to do this more than once. This seems to have been fixed in some Windows update.
