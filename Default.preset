@@ -41,6 +41,7 @@ DisableAdminShares              # EnableAdminShares
 # DisableNCSIProbe              # EnableNCSIProbe
 SetCurrentNetworkPrivate        # SetCurrentNetworkPublic
 # SetUnknownNetworksPrivate     # SetUnknownNetworksPublic
+# DisableConnectionSharing      # EnableConnectionSharing
 # DisableNetDevicesAutoInst     # EnableNetDevicesAutoInst
 # DisableFirewall               # EnableFirewall
 # HideDefenderTrayIcon          # ShowDefenderTrayIcon
@@ -174,6 +175,7 @@ UninstallMsftBloat              # InstallMsftBloat
 UninstallThirdPartyBloat        # InstallThirdPartyBloat
 UninstallWindowsStore           # InstallWindowsStore
 DisableXboxFeatures             # EnableXboxFeatures
+# DisableFullscreenOptims       # EnableFullscreenOptims
 DisableAdobeFlash               # EnableAdobeFlash
 DisableEdgePreload              # EnableEdgePreload
 DisableEdgeShortcutCreation     # EnableEdgeShortcutCreation
