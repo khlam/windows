@@ -1,7 +1,7 @@
 vlc
 firefox
 keepassxc
-git.install
+git.install|--params "/NoGuiHereIntegration"
 megasync
 sumatrapdf.install
 winscp

@@ -164,24 +164,6 @@ Function DisableTeleIps{
 	-Action Block -RemoteAddress ($ips)
 }
 
-# Disable Enhanced pointer precision
-Function DisableEnhancedPointerPrecision {
-	Write-Output "Disabling Enhanced pointer precision..."
-	Set-ItemProperty -Path "HKCU:\Control Panel\Mouse" -Name "MouseSpeed" -Type String -Value 0
-	Set-ItemProperty "HKCU:\Control Panel\Mouse" "MouseSensitivity" "10"
-	Set-ItemProperty "HKCU:\Control Panel\Mouse" "MouseSpeed" "0"
-	Set-ItemProperty "HKCU:\Control Panel\Mouse" "MouseThreshold1" "0"
-	Set-ItemProperty "HKCU:\Control Panel\Mouse" "MouseThreshold2" "0"
-	Set-ItemProperty "HKCU:\Control Panel\Mouse" "SmoothMouseXCurve" ([byte[]](0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0xCC, 0x0C, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x80, 0x99, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x66, 0x26, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x00, 0x00, 0x00, 0x00, 0x00))
-	Set-ItemProperty "HKCU:\Control Panel\Mouse" "SmoothMouseYCurve" ([byte[]](0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA8, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00))
-}
-
 # Change volume control to classic style
 Function ChangeVolumeClassic {
 	Write-Output "Changing volume control to classic style..."
@@ -213,9 +195,19 @@ Function InstallChocoPkgs {
 	$file = "$psscriptroot\chocoInstall.txt"
 	Write-Host "Installing all packages in $file that are not already installed..."
 	if (Test-Path $file) {
-		$toInstall = [string[]](Get-Content $file | Select-Object -Skip 3)
+        $toInstall = @()
+        $params = @()
+        foreach($line in Get-Content $file){
+            $line = $line.split('|')
+            $toInstall += $line[0]
+            if (!($line[1] -eq "")) {
+                $params += $line[1]
+            }else {
+                $params += ""
+            }
+        }
 		if (!($toInstall.count -eq 0)) {
-			$installed = [string[]](choco list --local-only | ForEach {"$_".Split(" ")[0]})
+            $installed = [string[]](choco list --local-only | ForEach {"$_".Split(" ")[0]})
 			$notInstalled = $toInstall | Where {$installed -NotContains $_}
 			
 			if (!($notInstalled.count -eq 0)){
@@ -223,9 +215,11 @@ Function InstallChocoPkgs {
 				Write-Host -NoNewline "Install? (Y/N)"
 				$response = read-host
 				if ( $response -ne "Y" ) { return; }
-				
 				ForEach ($j in $notInstalled) {
-					choco install $j -y
+                    $i = $toInstall.IndexOf($j)
+                    $p = $params[$i]
+                    Write-Host choco install $j $p -y 
+					Invoke-Expression "choco install $j $p -y"
 				}
 			}else {
 				Write-Host "All packages from $file installed."

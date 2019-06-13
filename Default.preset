@@ -216,7 +216,6 @@ UnpinTaskbarIcons
 DisableServices
 DisableNagle
 DisableTeleIps
-DisableEnhancedPointerPrecision
 DisableTransparency
 Disablewpad
 AppendHosts
