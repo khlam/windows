@@ -14,3 +14,4 @@ cpu-z
 deluge
 steam
 autohotkey.install
+sublimetext3
