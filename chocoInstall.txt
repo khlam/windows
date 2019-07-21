@@ -1,4 +1,3 @@
-vlc
 firefox
 keepassxc
 git.install|--params "/NoGuiHereIntegration"
@@ -10,8 +9,7 @@ vscodium
 hwmonitor
 7zip.install
 discord
-cpu-z
 deluge
 steam
-autohotkey.install
 sublimetext3
+vlc

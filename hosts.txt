@@ -5,3 +5,8 @@ settings-win.data.microsoft.com
 vortex.data.microsoft.com
 wpad.lan
 self.events.data.microsoft.com
+incoming.telemetry.mozilla.org
+telemetry.nvidia.com
+tracking-protection.cdn.mozilla.net
+graph.facebook.com
+incoming.telemetry.mozilla.org
