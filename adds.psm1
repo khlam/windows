@@ -23,6 +23,7 @@ Function DisableServices {
 	    "XblGameSave"                              # Xbox Live Game Save Service
 		"XboxNetApiSvc"                            # Xbox Live Networking Service
 		"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
+		"ndu"                                      # Windows Network Data Usage Monitor
 	)
 
 	foreach ($service in $services) {
