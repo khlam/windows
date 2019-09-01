@@ -1,6 +1,5 @@
 #Disable various services
 Function DisableServices {
-	
 	$services = @(
 	    "diagnosticshub.standardcollector.service" # Microsoft (R) Diagnostics Hub Standard Collector Service
 	    "DiagTrack"                                # Diagnostics Tracking Service
@@ -331,7 +330,7 @@ Function NetworkTweaks {
 }
 
 Function SetDefaultViewDetailed{
-	Write-Output "Setting Explorer default view to Detailed"
+	Write-Output "Setting Explorer default view to Detailed..."
 	Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" -Recurse -ErrorAction SilentlyContinue
 	Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagsMRU" -Recurse -ErrorAction SilentlyContinue
 	Remove-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Modules\GlobalSettings\Sizer" -Recurse -ErrorAction SilentlyContinue
@@ -350,4 +349,12 @@ Function SetDefaultViewDetailed{
 		Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}" -Name "GroupView" -Type DWord -Value 0
 		Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell\{5C4F28B5-F869-4E84-8E60-F11DB97C5CC7}" -Name "GroupByDirection" -Type DWord -Value 1
 	}
+}
+
+Function RemoveTextCopyPasteFormatOnStartup{
+	$cwd = ($pwd).path
+	$currentUser=[Environment]::UserName 
+	$startupPath="C:/Users/$currentUser/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+	Write-Output "Copying clipboard-clear-text-format.ahk to $startupPath..."
+	Copy-Item "$psscriptroot\clipboard-clear-text-format.ahk" -Destination $startupPath -Recurse -force
 }
