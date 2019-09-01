@@ -4,4 +4,5 @@
 return
 
 OnClipboardChange:
-Clipboard = %Clipboard%
+if(Clipboard != "")
+    Clipboard = %Clipboard%
