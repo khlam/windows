@@ -1,7 +1,7 @@
 ##########
 # Win 10 / Server 2016 / Server 2019 Initial Setup Script - Tweak library
 # Author: Disassembler <disassembler@dasm.cz>
-# Version: v3.7, 2019-05-31
+# Version: v3.8, 2019-09-11
 # Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
 ##########
 
@@ -131,12 +131,6 @@ Function EnableSmartScreen {
 # Disable Web Search in Start Menu
 Function DisableWebSearch {
 	Write-Output "Disabling Bing Search in Start Menu..."
-	# Build 10.0.18362.329 contains a bug breaking Start Menu search if DisableWebSearch is applied
-	# See https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/262 for details and ways to fix the problem
-	If ((Get-ItemProperty -Path c:\windows\system32\hal.dll).VersionInfo.ProductVersion -eq "10.0.18362.329") {
-		Write-Warning "Build 10.0.18362.329 contains a bug breaking Start Menu search if DisableWebSearch is applied."
-		Write-Warning "See https://github.com/Disassembler0/Win10-Initial-Setup-Script/issues/262 for details and ways to fix the problem."
-	}
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "BingSearchEnabled" -Type DWord -Value 0
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name "CortanaConsent" -Type DWord -Value 0
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search")) {
@@ -1188,7 +1182,9 @@ Function EnableUpdateMSProducts {
 # Disable receiving updates for other Microsoft products via Windows Update
 Function DisableUpdateMSProducts {
 	Write-Output "Disabling updates for other Microsoft products..."
-	(New-Object -ComObject Microsoft.Update.ServiceManager).RemoveService("7971f918-a847-4430-9279-4a52d1efe18d") | Out-Null
+	If ((New-Object -ComObject Microsoft.Update.ServiceManager).Services | Where-Object { $_.ServiceID -eq "7971f918-a847-4430-9279-4a52d1efe18d"}) {
+		(New-Object -ComObject Microsoft.Update.ServiceManager).RemoveService("7971f918-a847-4430-9279-4a52d1efe18d") | Out-Null
+	}
 }
 
 # Disable Windows Update automatic downloads
@@ -1204,6 +1200,23 @@ Function DisableUpdateAutoDownload {
 Function EnableUpdateAutoDownload {
 	Write-Output "Enabling Windows Update automatic downloads..."
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUOptions" -ErrorAction SilentlyContinue
+}
+
+# Disable automatic restart after Windows Update installation
+# The tweak is slightly experimental, as it registers a dummy debugger for MusNotification.exe
+# which blocks the restart prompt executable from running, thus never schedulling the restart
+Function DisableUpdateRestart {
+	Write-Output "Disabling Windows Update automatic restart..."
+	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe")) {
+		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" -Name "Debugger" -Type String -Value "cmd.exe"
+}
+
+# Enable automatic restart after Windows Update installation
+Function EnableUpdateRestart {
+	Write-Output "Enabling Windows Update automatic restart..."
+	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\MusNotification.exe" -Name "Debugger" -ErrorAction SilentlyContinue
 }
 
 # Disable nightly wake-up for Automatic Maintenance and Windows Updates
@@ -2835,7 +2848,7 @@ Function UninstallOneDrive {
 	Start-Sleep -s 2
 	Stop-Process -Name "explorer" -Force -ErrorAction SilentlyContinue
 	Start-Sleep -s 2
-	If ((Get-ChildItem -Path "$env:USERPROFILE\OneDrive" | Measure-Object).Count -eq 0) {
+	If ((Get-ChildItem -Path "$env:USERPROFILE\OneDrive" -ErrorAction SilentlyContinue | Measure-Object).Count -eq 0) {
 		Remove-Item -Path "$env:USERPROFILE\OneDrive" -Force -Recurse -ErrorAction SilentlyContinue
 	}
 	Remove-Item -Path "$env:LOCALAPPDATA\Microsoft\OneDrive" -Force -Recurse -ErrorAction SilentlyContinue
