@@ -4,5 +4,8 @@
 return
 
 OnClipboardChange:
-if(Clipboard != "")
-    Clipboard = %Clipboard%
+if(Clipboard != ""){
+	if !FileExist(Clipboard){
+	    Clipboard = %Clipboard%
+	}
+}
