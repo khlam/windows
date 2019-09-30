@@ -9,3 +9,4 @@ if(Clipboard != ""){
 	    Clipboard = %Clipboard%
 	}
 }
+; Has a problem with copy-pasting multiple files
