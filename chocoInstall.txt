@@ -6,9 +6,7 @@ sumatrapdf.install
 winscp
 putty.install
 vscodium
-hwmonitor
 7zip.install
-discord
 deluge
 steam
 sublimetext3
