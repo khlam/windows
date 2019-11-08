@@ -5,8 +5,7 @@ return
 
 OnClipboardChange:
 if(Clipboard != ""){
-	if !FileExist(Clipboard){
+	If !(WinActive("ahk_class CabinetWClass") or WinActive("ahk_class Progman")) {
 	    Clipboard = %Clipboard%
 	}
 }
-; Has a problem with copy-pasting multiple files

@@ -254,7 +254,7 @@ UpdateNvidiaDrivers
 
 NetworkTweaks
 
-# RemoveTextCopyPasteFormatOnStartup
+RemoveTextCopyPasteFormatOnStartup
 
 ### Auxiliary Functions ###
 WaitForKey
