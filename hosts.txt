@@ -10,3 +10,4 @@ telemetry.nvidia.com
 tracking-protection.cdn.mozilla.net
 graph.facebook.com
 incoming.telemetry.mozilla.org
+client.wns.windows.com
