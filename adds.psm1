@@ -355,6 +355,6 @@ Function RemoveTextCopyPasteFormatOnStartup{
 	$cwd = ($pwd).path
 	$currentUser=[Environment]::UserName 
 	$startupPath="C:/Users/$currentUser/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
-	Write-Output "Copying clipboard-clear-text-format.ahk to $startupPath..."
-	Copy-Item "$psscriptroot\clipboard-clear-text-format.ahk" -Destination $startupPath -Recurse -force
+	Write-Output "Copying clipboard-clear-text-format.exe to $startupPath..."
+	Copy-Item "$psscriptroot\clipboard-clear-text-format.exe" -Destination $startupPath -Recurse -force
 }
