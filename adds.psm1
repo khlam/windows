@@ -271,36 +271,6 @@ Function Disablewpad{
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinHttpAutoProxySvc" -Name "Start" -Type DWord -Value 4
 }
 
-# Disable wpad DNS queries and appends all entries in hosts.txt that are not in the hosts file
-Function AppendHosts{
-	Write-Output "Appending to Hosts file..."
-    $file = "$psscriptroot\hosts.txt"
-    $HostsToWrite = [string[]](Get-Content $file | Select-Object -Skip 0)
-    if (!($HostsToWrite.count -eq 0)){
-        $hostspath="$($env:windir)\System32\drivers\etc\hosts"
-        If ((Test-Path $hostspath) -eq "True") {
-            $InHosts = @()
-            $hostsFile = Get-Content $hostspath
-            foreach ($line in $hostsFile) {
-                $ln = [regex]::Split($line, "^127.0.0.1 +")
-                if ($ln.count -eq 2) {
-                    $InHosts += $ln[1]
-                }
-            }
-        }
-        $notInstalled = $HostsToWrite | Where {$InHosts -NotContains $_}
-        if (!($notInstalled.count -eq 0)){
-            foreach ($domain in $notInstalled){
-                "`n127.0.0.1 " + $domain | Out-File -encoding ASCII -append $hostspath
-                Write-Host "Adding host $domain"
-            }
-        }
-        Write-Host "All hosts in $file set in $hostspath"
-    }else {
-        Write-Output "$file empty"
-    }
-}
-
 Function NetworkTweaks {
 	Write-Output "Setting network settings..."
 	netsh interface teredo set state disabled

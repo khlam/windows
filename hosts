@@ -1,0 +1,15 @@
+# KHLAM Hostsfile Blocklist
+
+127.0.0.1 config.edge.skype.com
+127.0.0.1 nexusrules.officeapps.live.com
+127.0.0.1 www.google-analytics.com
+127.0.0.1 settings-win.data.microsoft.com
+127.0.0.1 vortex.data.microsoft.com
+127.0.0.1 self.events.data.microsoft.com
+127.0.0.1 incoming.telemetry.mozilla.org
+127.0.0.1 telemetry.nvidia.com
+127.0.0.1 tracking-protection.cdn.mozilla.net
+127.0.0.1 graph.facebook.com
+127.0.0.1 incoming.telemetry.mozilla.org
+127.0.0.1 client.wns.windows.com
+127.0.0.1 telemetry-in.battle.net

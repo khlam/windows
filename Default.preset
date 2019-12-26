@@ -241,7 +241,6 @@ DisableNagle
 DisableTeleIps
 DisableTransparency
 Disablewpad
-# AppendHosts
 ChangeVolumeClassic
 GamingRegSet
 SetDefaultViewDetailed
