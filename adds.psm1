@@ -178,7 +178,7 @@ Function ChangeVolumeClassic {
 Function InstallChoco {
 	Write-Host "Installing chocolatey..."
 	$error.clear()
-	try { choco }
+	try { choco feature enable --name=useRememberedArgumentsForUpgrades }
 	catch { 
 		Write-Host -nonewline "Install chocolatey? (Y/N) "
 		$response = read-host
@@ -234,9 +234,10 @@ Function InstallChocoPkgs {
 Function UpdateChoco {
 	Write-Host "Updating chocolatey..."
 	$error.clear()
-	try { choco }
+	try { choco feature enable --name=useRememberedArgumentsForUpgrades }
 	catch { Write-Host "Chocolatey is not installed." }
 	if (!$error) {
+		choco feature enable --name=useRememberedArgumentsForUpgrades
 		choco upgrade chocolatey -y
 		choco upgrade all -y
 	}
