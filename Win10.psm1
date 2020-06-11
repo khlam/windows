@@ -476,7 +476,7 @@ Function SetP2PUpdateInternet {
 			New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" | Out-Null
 		}
 		Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config" -Name "DODownloadMode" -Type DWord -Value 3
-	} ElseIf ([System.Environment]::OSVersion.Version.Build -eq 14393) {
+	} ElseIf ([System.Environment]::OSVersion.Version.Build -le 14393) {
 		# Method used in 1511 and 1607
 		Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeliveryOptimization" -Name "DODownloadMode" -ErrorAction SilentlyContinue
 	} Else {
@@ -1166,9 +1166,7 @@ Function DisableUpdateDriver {
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching")) {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontPromptForWindowsUpdate" -Type DWord -Value 1
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontSearchWindowsUpdate" -Type DWord -Value 1
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DriverUpdateWizardWuSearchEnabled" -Type DWord -Value 0
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "SearchOrderConfig" -Type DWord -Value 0
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate")) {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" | Out-Null
 	}
@@ -1179,9 +1177,7 @@ Function DisableUpdateDriver {
 Function EnableUpdateDriver {
 	Write-Output "Enabling driver offering through Windows Update..."
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" -Name "PreventDeviceMetadataFromNetwork" -ErrorAction SilentlyContinue
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontPromptForWindowsUpdate" -ErrorAction SilentlyContinue
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DontSearchWindowsUpdate" -ErrorAction SilentlyContinue
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "DriverUpdateWizardWuSearchEnabled" -ErrorAction SilentlyContinue
+	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" -Name "SearchOrderConfig" -ErrorAction SilentlyContinue
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "ExcludeWUDriversInQualityUpdate" -ErrorAction SilentlyContinue
 }
 
@@ -1901,6 +1897,26 @@ Function ShowMostUsedApps {
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoStartMenuMFUprogramsList" -ErrorAction SilentlyContinue
 }
 
+# Set PowerShell instead of Command prompt in Start Button context menu (Win+X) - Default since 1703
+Function SetWinXMenuPowerShell {
+	Write-Output "Setting PowerShell instead of Command prompt in WinX menu..."
+	If ([System.Environment]::OSVersion.Version.Build -le 14393) {
+		Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DontUsePowerShellOnWinX" -Type DWord -Value 0
+	} Else {
+		Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DontUsePowerShellOnWinX" -ErrorAction SilentlyContinue
+	}
+}
+
+# Set Command prompt instead of PowerShell in Start Button context menu (Win+X) - Default in 1507 - 1607
+Function SetWinXMenuCmd {
+	Write-Output "Setting Command prompt instead of PowerShell in WinX menu..."
+	If ([System.Environment]::OSVersion.Version.Build -le 14393) {
+		Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DontUsePowerShellOnWinX" -ErrorAction SilentlyContinue
+	} Else {
+		Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "DontUsePowerShellOnWinX" -Type DWord -Value 1
+	}
+}
+
 # Set Control Panel view to Small icons (Classic)
 Function SetControlPanelSmallIcons {
 	Write-Output "Setting Control Panel view to small icons..."
@@ -1997,16 +2013,28 @@ Function DisableTitleBarColor {
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type DWord -Value 0
 }
 
-# Enable Dark Theme
-Function EnableDarkTheme {
-	Write-Output "Enabling Dark Theme..."
+# Set Dark Mode for Applications
+Function SetAppsDarkMode {
+	Write-Output "Setting Dark Mode for Applications..."
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Type DWord -Value 0
 }
 
-# Disable Dark Theme
-Function DisableDarkTheme {
-	Write-Output "Disabling Dark Theme..."
-	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -ErrorAction SilentlyContinue
+# Set Light Mode for Applications
+Function SetAppsLightMode {
+	Write-Output "Setting Light Mode for Applications..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Type DWord -Value 1
+}
+
+# Set Light Mode for System - Applicable since 1903
+Function SetSystemLightMode {
+	Write-Output "Setting Light Mode for System..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Type DWord -Value 1
+}
+
+# Set Dark Mode for System - Applicable since 1903
+Function SetSystemDarkMode {
+	Write-Output "Setting Dark Mode for System..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Type DWord -Value 0
 }
 
 # Add secondary en-US keyboard
@@ -2496,6 +2524,18 @@ Function HideNetworkFromDesktop {
 	Write-Output "Hiding Network shortcut from desktop..."
 	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\ClassicStartMenu" -Name "{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}" -ErrorAction SilentlyContinue
 	Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}" -ErrorAction SilentlyContinue
+}
+
+# Hide all icons from desktop
+Function HideDesktopIcons {
+	Write-Output "Hiding all icons from desktop..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideIcons" -Value 1
+}
+
+# Show all icons on desktop
+Function ShowDesktopIcons {
+	Write-Output "Showing all icons on desktop..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideIcons" -Value 0
 }
 
 # Show Windows build number and Windows edition (Home/Pro/Enterprise) from bottom right of desktop
@@ -3454,6 +3494,26 @@ Function InstallSSHServer {
 Function UninstallSSHServer {
 	Write-Output "Uninstalling OpenSSH Server..."
 	Get-WindowsCapability -Online | Where-Object { $_.Name -like "OpenSSH.Server*" } | Remove-WindowsCapability -Online | Out-Null
+}
+
+# Install Telnet Client
+Function InstallTelnetClient {
+	Write-Output "Installing Telnet Client..."
+	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
+		Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq "TelnetClient" } | Enable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null
+	} Else {
+		Install-WindowsFeature -Name "Telnet-Client" -WarningAction SilentlyContinue | Out-Null
+	}
+}
+
+# Uninstall Telnet Client
+Function UninstallTelnetClient {
+	Write-Output "Uninstalling Telnet Client..."
+	If ((Get-CimInstance -Class "Win32_OperatingSystem").ProductType -eq 1) {
+		Get-WindowsOptionalFeature -Online | Where-Object { $_.FeatureName -eq "TelnetClient" } | Disable-WindowsOptionalFeature -Online -NoRestart -WarningAction SilentlyContinue | Out-Null
+	} Else {
+		Uninstall-WindowsFeature -Name "Telnet-Client" -WarningAction SilentlyContinue | Out-Null
+	}
 }
 
 # Install .NET Framework 2.0, 3.0 and 3.5 runtimes - Requires internet connection
