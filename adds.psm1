@@ -14,13 +14,13 @@ Function DisableServices {
 	    "SharedAccess"                             # Internet Connection Sharing (ICS)
 	    "TrkWks"                                   # Distributed Link Tracking Client
 	    "WbioSrvc"                                 # Windows Biometric Service
-	    "WlanSvc"                                  # WLAN AutoConfig
+	    #"WlanSvc"                                  # WLAN AutoConfig
 		"WMPNetworkSvc"                            # Windows Media Player Network Sharing Service
 		"XboxGipSvc"
 		"xbgm"
-	    "XblAuthManager"                           # Xbox Live Auth Manager
-	    "XblGameSave"                              # Xbox Live Game Save Service
-		"XboxNetApiSvc"                            # Xbox Live Networking Service
+	    #"XblAuthManager"                           # Xbox Live Auth Manager
+	    #"XblGameSave"                              # Xbox Live Game Save Service
+		#"XboxNetApiSvc"                            # Xbox Live Networking Service
 		"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
 		"ndu"                                      # Windows Network Data Usage Monitor
 	)
