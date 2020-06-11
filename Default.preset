@@ -133,8 +133,8 @@ ShowTrayIcons                   # HideTrayIcons
 # ShowSecondsInTaskbar          # HideSecondsFromTaskbar
 DisableSearchAppInStore         # EnableSearchAppInStore
 DisableNewAppPrompt             # EnableNewAppPrompt
-# HideRecentlyAddedApps         # ShowRecentlyAddedApps
-# HideMostUsedApps              # ShowMostUsedApps
+HideRecentlyAddedApps         # ShowRecentlyAddedApps
+HideMostUsedApps              # ShowMostUsedApps
 # SetWinXMenuPowerShell         # SetWinXMenuCmd
 # SetControlPanelSmallIcons     # SetControlPanelLargeIcons     # SetControlPanelCategories
 DisableShortcutInName           # EnableShortcutInName
@@ -246,6 +246,8 @@ UnpinStartMenuTiles
 UnpinTaskbarIcons
 
 ### Personal functions ###
+RemovePinToStartContext
+
 DisableServices
 DisableNagle
 DisableTeleIps

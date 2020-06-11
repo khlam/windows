@@ -329,3 +329,12 @@ Function RemoveTextCopyPasteFormatOnStartup{
 	Write-Output "Copying clipboard-clear-text-format.exe to $startupPath..."
 	Copy-Item "$psscriptroot\clipboard-clear-text-format.exe" -Destination $startupPath -Recurse -force
 }
+
+Function RemovePinToStartContext{
+	Write-Output "Removing Pin To Start from context menu..."
+	If (!(Test-Path "HKCR:")) {
+		New-PSDrive -Name "HKCR" -PSProvider "Registry" -Root "HKEY_CLASSES_ROOT" | Out-Null
+	}
+	Remove-Item -LiteralPath "HKCR:\exefile\shellex\ContextMenuHandlers\PintoStartScreen" -ErrorAction SilentlyContinue
+	Remove-Item -LiteralPath "HKLM:\SOFTWARE\Classes\Folder\shellex\ContextMenuHandlers\PintoStartScreen" -ErrorAction SilentlyContinue
+}
