@@ -1,7 +1,6 @@
 firefox
 keepassxc
 git.install|--params "/NoGuiHereIntegration"
-megasync
 sumatrapdf.install
 winscp
 putty.install
@@ -10,3 +9,4 @@ deluge
 steam
 sublimetext3
 vlc
+syncthing-gtk
