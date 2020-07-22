@@ -1,7 +1,7 @@
 ##########
 # Win 10 / Server 2016 / Server 2019 Initial Setup Script - Default preset
 # Author: Disassembler <disassembler@dasm.cz>
-# Version: v3.9, 2020-04-02
+# Version: v3.10, 2020-07-15
 # Source: https://github.com/Disassembler0/Win10-Initial-Setup-Script
 ##########
 
@@ -10,12 +10,12 @@ RequireAdmin
 
 ### Privacy Tweaks ###
 DisableTelemetry                # EnableTelemetry
-DisableWiFiSense                # EnableWiFiSense
-# DisableSmartScreen            # EnableSmartScreen
+DisableCortana                  # EnableCortana
+DisableWiFiSense                # EnableWiFiSense         
+EnableSmartScreen               # DisableSmartScreen
 DisableWebSearch                # EnableWebSearch
 DisableAppSuggestions           # EnableAppSuggestions
 DisableActivityHistory          # EnableActivityHistory
-DisableBackgroundApps           # EnableBackgroundApps
 DisableSensors                  # EnableSensors
 DisableLocation                 # EnableLocation
 DisableMapUpdates               # EnableMapUpdates
@@ -23,7 +23,6 @@ DisableFeedback                 # EnableFeedback
 DisableTailoredExperiences      # EnableTailoredExperiences
 DisableAdvertisingID            # EnableAdvertisingID
 DisableWebLangList              # EnableWebLangList
-DisableCortana                  # EnableCortana
 DisableBiometrics               # EnableBiometrics
 DisableCamera                   # EnableCamera
 # DisableMicrophone             # EnableMicrophone
@@ -32,7 +31,25 @@ SetP2PUpdateDisable             # SetP2PUpdateLocal             # SetP2PUpdateIn
 DisableDiagTrack                # EnableDiagTrack
 DisableWAPPush                  # EnableWAPPush
 # EnableClearRecentFiles        # DisableClearRecentFiles
-DisableRecentFiles            # EnableRecentFiles
+DisableRecentFiles              # EnableRecentFiles
+
+### UWP Privacy Tweaks ###
+DisableUWPBackgroundApps      # EnableUWPBackgroundApps
+DisableUWPVoiceActivation     # EnableUWPVoiceActivation
+DisableUWPNotifications       # EnableUWPNotifications
+DisableUWPAccountInfo         # EnableUWPAccountInfo
+DisableUWPContacts            # EnableUWPContacts
+DisableUWPCalendar            # EnableUWPCalendar
+DisableUWPPhoneCalls          # EnableUWPPhoneCalls
+DisableUWPCallHistory         # EnableUWPCallHistory
+DisableUWPEmail               # EnableUWPEmail
+DisableUWPTasks               # EnableUWPTasks
+DisableUWPMessaging           # EnableUWPMessaging
+DisableUWPRadios              # EnableUWPRadios
+DisableUWPOtherDevices        # EnableUWPOtherDevices
+DisableUWPDiagInfo            # EnableUWPDiagInfo
+DisableUWPFileSystem          # EnableUWPFileSystem
+DisableUWPSwapFile            # EnableUWPSwapFile
 
 ### Security Tweaks ###
 # SetUACLow                     # SetUACHigh
@@ -44,7 +61,7 @@ DisableAdminShares              # EnableAdminShares
 # DisableLLMNR                  # EnableLLMNR
 # DisableNCSIProbe              # EnableNCSIProbe
 SetCurrentNetworkPrivate        # SetCurrentNetworkPublic
-# SetUnknownNetworksPrivate     # SetUnknownNetworksPublic
+SetUnknownNetworksPrivate     # SetUnknownNetworksPublic
 DisableConnectionSharing        # EnableConnectionSharing
 # DisableNetDevicesAutoInst     # EnableNetDevicesAutoInst
 # DisableFirewall               # EnableFirewall
@@ -101,7 +118,6 @@ DisableAutorun                  # EnableAutorun
 # DisableDefragmentation        # EnableDefragmentation
 # DisableSuperfetch             # EnableSuperfetch
 # DisableIndexing               # EnableIndexing
-# DisableSwapFile               # EnableSwapFile
 # DisableRecycleBin             # EnableRecycleBin
 EnableNTFSLongPaths             # DisableNTFSLongPaths
 # DisableNTFSLastAccess         # EnableNTFSLastAccess
@@ -161,6 +177,7 @@ ShowHiddenFiles                 # HideHiddenFiles
 # ShowFolderMergeConflicts      # HideFolderMergeConflicts
 EnableNavPaneExpand             # DisableNavPaneExpand
 # ShowNavPaneAllFolders         # HideNavPaneAllFolders
+# ShowNavPaneLibraries          # HideNavPaneLibraries
 # EnableFldrSeparateProcess     # DisableFldrSeparateProcess
 # EnableRestoreFldrWindows      # DisableRestoreFldrWindows
 # ShowEncCompFilesColor         # HideEncCompFilesColor
@@ -190,7 +207,8 @@ HidePicturesFromExplorer        # ShowPicturesInExplorer
 HideVideosFromThisPC            # ShowVideosInThisPC
 HideVideosFromExplorer          # ShowVideosInExplorer
 Hide3DObjectsFromThisPC         # Show3DObjectsInThisPC
-Hide3DObjectsFromExplorer       # Show3DObjectsInExplorer
+Hide3DObjectsFromExplorer     # Show3DObjectsInExplorer
+HideNetworkFromExplorer       # ShowNetworkInExplorer
 HideIncludeInLibraryMenu      # ShowIncludeInLibraryMenu
 HideGiveAccessToMenu          # ShowGiveAccessToMenu
 HideShareMenu                 # ShowShareMenu
@@ -212,6 +230,7 @@ DisableEdgeShortcutCreation     # EnableEdgeShortcutCreation
 DisableIEFirstRun               # EnableIEFirstRun
 DisableFirstLogonAnimation      # EnableFirstLogonAnimation
 DisableMediaSharing             # EnableMediaSharing
+# DisableMediaOnlineAccess      # EnableMediaOnlineAccess
 # EnableDeveloperMode           # DisableDeveloperMode
 # UninstallMediaPlayer          # InstallMediaPlayer
 UninstallInternetExplorer     # InstallInternetExplorer
