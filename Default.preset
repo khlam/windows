@@ -230,9 +230,9 @@ DisableEdgeShortcutCreation     # EnableEdgeShortcutCreation
 DisableIEFirstRun               # EnableIEFirstRun
 DisableFirstLogonAnimation      # EnableFirstLogonAnimation
 DisableMediaSharing             # EnableMediaSharing
-# DisableMediaOnlineAccess      # EnableMediaOnlineAccess
+DisableMediaOnlineAccess      # EnableMediaOnlineAccess
 # EnableDeveloperMode           # DisableDeveloperMode
-# UninstallMediaPlayer          # InstallMediaPlayer
+UninstallMediaPlayer          # InstallMediaPlayer
 UninstallInternetExplorer     # InstallInternetExplorer
 # UninstallWorkFolders          # InstallWorkFolders
 UninstallHelloFace            # InstallHelloFace
@@ -247,7 +247,7 @@ UninstallPowerShellISE        # InstallPowerShellISE
 # InstallNET23                  # UninstallNET23
 SetPhotoViewerAssociation       # UnsetPhotoViewerAssociation
 AddPhotoViewerOpenWith          # RemovePhotoViewerOpenWith
-# UninstallPDFPrinter           # InstallPDFPrinter
+UninstallPDFPrinter           # InstallPDFPrinter
 UninstallXPSPrinter             # InstallXPSPrinter
 RemoveFaxPrinter                # AddFaxPrinter
 UninstallFaxAndScan             # InstallFaxAndScan
