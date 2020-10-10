@@ -286,5 +286,7 @@ NetworkTweaks
 
 RemoveTextCopyPasteFormatOnStartup
 
+DefenderAttackSurfaceReduction
+
 ### Auxiliary Functions ###
 WaitForKey
