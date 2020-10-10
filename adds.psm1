@@ -339,6 +339,7 @@ Function RemovePinToStartContext{
 	Remove-Item -LiteralPath "HKLM:\SOFTWARE\Classes\Folder\shellex\ContextMenuHandlers\PintoStartScreen" -ErrorAction SilentlyContinue
 }
 
+# https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-atp/attack-surface-reduction#block-executable-content-from-email-client-and-webmail
 Function DefenderAttackSurfaceReduction {
 	$services = @(
 	    "BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550" # Block executable content from email client and webmail
