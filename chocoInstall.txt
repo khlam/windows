@@ -7,6 +7,7 @@ putty.install
 7zip.install
 deluge
 steam
-sublimetext3
+notepadplusplus.install
+docker-desktop
 vlc
 syncthing-gtk

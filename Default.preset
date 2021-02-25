@@ -238,7 +238,8 @@ UninstallInternetExplorer     # InstallInternetExplorer
 UninstallHelloFace            # InstallHelloFace
 # UninstallMathRecognizer       # InstallMathRecognizer
 UninstallPowerShellV2         # InstallPowerShellV2
-UninstallLinuxSubsystem         #InstallLinuxSubsystem
+#UninstallLinuxSubsystem        
+InstallLinuxSubsystem
 UninstallPowerShellISE        # InstallPowerShellISE
 # InstallHyperV                 # UninstallHyperV
 # UninstallSSHClient            # InstallSSHClient
