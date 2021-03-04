@@ -364,3 +364,7 @@ Function DefenderAttackSurfaceReduction {
 		Add-MpPreference -AttackSurfaceReductionRules_Ids $GUID -AttackSurfaceReductionRules_Actions Enabled
 	}
 }
+
+Function RemoveMeetNow {
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "HideSCAMeetNow" -Value 1
+}

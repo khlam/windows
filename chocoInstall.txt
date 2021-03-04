@@ -11,3 +11,6 @@ notepadplusplus.install
 docker-desktop
 vlc
 syncthing-gtk
+msiafterburner
+vscodium
+hwmonitor
