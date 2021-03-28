@@ -272,34 +272,6 @@ Function Disablewpad{
 	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinHttpAutoProxySvc" -Name "Start" -Type DWord -Value 4
 }
 
-Function NetworkTweaks {
-	Write-Output "Setting network settings..."
-	netsh interface teredo set state disabled
-	netsh interface 6to4 set state disabled
-	netsh winsock reset
-	netsh interface isatap set state disable
-	netsh int tcp set global timestamps=disabled
-	netsh int tcp set heuristics disabled
-	netsh int tcp set global autotuninglevel=disable
-	netsh int tcp set global congestionprovider=ctcp
-	netsh int tcp set supplemental Internet congestionprovider=CTCP
-	netsh int tcp set global chimney=disabled
-	netsh int tcp set global ecncapability=disabled
-	netsh int tcp set global rss=enabled
-	netsh int tcp set global rsc=disabled
-	netsh int tcp set global dca=enabled
-	netsh int tcp set global netdma=enabled
-	Disable-NetAdapterChecksumOffload -Name "*"
-	Disable-NetAdapterLso -Name "*"
-	Disable-NetAdapterRsc -Name "*"
-	Disable-NetAdapterIPsecOffload -Name "*"
-	Disable-NetAdapterPowerManagement -Name "*"
-	Disable-NetAdapterQos -Name "*"
-	
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters" -Name "EnableICSIPv6" -Type DWord -Value 0
-	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\services\TCPIP6\Parameters" -Name "DisabledComponents" -Type DWord -Value 255
-}
-
 Function SetDefaultViewDetailed{
 	Write-Output "Setting Explorer default view to Detailed..."
 	Remove-Item -Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags" -Recurse -ErrorAction SilentlyContinue
@@ -367,4 +339,8 @@ Function DefenderAttackSurfaceReduction {
 
 Function RemoveMeetNow {
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "HideSCAMeetNow" -Value 1
+}
+
+Function RemoveCustomizeThisFolder {
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoCustomizeThisFolder" -Value 1
 }
