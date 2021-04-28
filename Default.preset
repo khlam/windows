@@ -283,11 +283,10 @@ UpdateChoco
 
 RemoveMeetNow
 
-UpdateNvidiaDrivers
+# UpdateNvidiaDrivers
 
 RemoveTextCopyPasteFormatOnStartup
 
 DefenderAttackSurfaceReduction
 
-### Auxiliary Functions ###
-WaitForKey
+Restart
