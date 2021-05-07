@@ -41,34 +41,6 @@ Function Exists-RegistryValue($pspath, $propertyname) {
     Return $false
 }
 
-# Disable Nagle Algorithm
-# Modified from: https://gallery.technet.microsoft.com/scriptcenter/deactivate-Nagle-Algorithm-66ca7608
-Function DisableNagle{
-	$strTargetNICAddress = Test-Connection -ComputerName (hostname) -Count 1  | Select -ExpandProperty IPV4Address 
-	$strTargetNICAddress = $strTargetNICAddress.IPAddressToString
-
-	foreach($item in Get-Childitem -LiteralPath HKLM:\system\currentcontrolset\services\tcpip\parameters\interfaces)
-	{
-	    
-	    $key = Get-ItemProperty $item.PSPath
-	    
-	    if(([string]$key.IPAddress -match $strTargetNICAddress) -OR ([string]$key.DHCPIPAddress -match $strTargetNICAddress))
-	    {
-	        Write-Host "Interface: " $item.PSPath
-	        # only one is supposed to have a value, so both vars printed quick and dirty
-	        Write-Host "IP: " $key.IPAddress $key.DHCPIPAddress
-
-			Set-ItemProperty -LiteralPath $item.PSPath -Name TcpAckFrequency -Value 1 -ea "Stop"
-			Set-ItemProperty -LiteralPath $item.PSPath -Name TCPNoDelay -Value 1 -ea "Stop"
-
-	        if(-not [Boolean](Exists-RegistryValue $item.PSPath "TcpAckFrequency"))
-	        {
-	        	Write-Host "Successfully disabled Nagle's algorithm."
-	        }
-	    }
-	}
-}
-
 # Nvidia Driver Check, cleans and installs new drivers
 # Source: https://github.com/lord-carlos/nvidia-update
 Function UpdateNvidiaDrivers{
@@ -343,4 +315,13 @@ Function RemoveMeetNow {
 
 Function RemoveCustomizeThisFolder {
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoCustomizeThisFolder" -Value 1
+}
+
+Function RemoveMSChromeEdge {
+	$path = Resolve-Path -Path "C:\Program Files (x86)\Microsoft\Edge\Application\*\Installer\setup.exe" -Relative
+	& "$path" -uninstall -system-level
+	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate")) {
+		New-Item -Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate" -Name "EnableMtcUvc" -Type Dword -Value 1
 }

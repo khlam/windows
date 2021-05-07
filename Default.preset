@@ -268,11 +268,14 @@ UnpinTaskbarIcons
 RemoveCustomizeThisFolder
 RemovePinToStartContext
 
+RemoveMeetNow
+
 DisableServices
-DisableNagle
+
 DisableTeleIps
 DisableTransparency
 Disablewpad
+
 ChangeVolumeClassic
 GamingRegSet
 SetDefaultViewDetailed
@@ -280,8 +283,6 @@ SetDefaultViewDetailed
 InstallChoco
 InstallChocoPkgs
 UpdateChoco
-
-RemoveMeetNow
 
 # UpdateNvidiaDrivers
 
