@@ -316,12 +316,3 @@ Function RemoveMeetNow {
 Function RemoveCustomizeThisFolder {
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoCustomizeThisFolder" -Value 1
 }
-
-Function RemoveMSChromeEdge {
-	$path = Resolve-Path -Path "C:\Program Files (x86)\Microsoft\Edge\Application\*\Installer\setup.exe" -Relative
-	& "$path" -uninstall -system-level
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate" -Force | Out-Null
-	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\EdgeUpdate" -Name "EnableMtcUvc" -Type Dword -Value 1
-}
