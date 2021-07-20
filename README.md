@@ -1,5 +1,5 @@
-# Win10-Config
-This script removes bloatware, tidies interfaces, and updates/installs my preferred default programs with Chocolatey.
+# Windows All-In-One Script
+Removes bloatware, tidies interfaces, and updates/installs my preferred default programs with Chocolatey.
 
 ### Run
 1. Modify the following configuration files as needed
@@ -11,7 +11,7 @@ This script removes bloatware, tidies interfaces, and updates/installs my prefer
 2. Run [`Default.cmd`](./Default.cmd) as administrator.
 
 ### References
-- https://github.com/Disassembler0/Win10-Initial-Setup-Script
+- Originally forked from https://github.com/Disassembler0/Win10-Initial-Setup-Script
 - https://github.com/chocolatey/choco
 - https://github.com/lord-carlos/nvidia-update
 - https://github.com/CHEF-KOCH/GamingTweaks
