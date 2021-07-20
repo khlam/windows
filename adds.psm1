@@ -42,92 +42,6 @@ Function Exists-RegistryValue($pspath, $propertyname) {
     Return $false
 }
 
-# Nvidia Driver Check, cleans and installs new drivers
-# Source: https://github.com/lord-carlos/nvidia-update
-Function UpdateNvidiaDrivers{
-	# Checking currently installed driver version
-	Write-Host "Updating Nvidia drivers..."
-	try {  
-		$ins_version = (Get-WmiObject Win32_PnPSignedDriver | Where-Object {$_.devicename -like "*nvidia*" -and $_.devicename -notlike "*audio*"}).DriverVersion.SubString(7).Remove(1,1).Insert(3,".")
-	} catch {
-		Write-Host "Unable to detect a compatible Nvidia device."
-		return;
-	}
-	Write-Host "Installed version: `t$ins_version"
-
-	# Set locations
-	$location = "US"
-	$extractDir = [Environment]::GetFolderPath("Desktop")
-
-	# Checking if 7zip is installed
-	if (Test-Path $env:programfiles\7-zip\7z.exe) {
-		$archiverProgram = "$env:programfiles\7-zip\7z.exe"
-	} else {
-		Write-Host "7zip not installed. Cannot extract driver package. Cancelling."
-		return;
-	}
-
-	# Checking latest driver version from Nvidia website
-	$link = Invoke-WebRequest -Uri 'https://www.nvidia.com/Download/processFind.aspx?psid=101&pfid=816&osid=57&lid=1&whql=1&lang=en-us&ctk=0' -Method GET -UseBasicParsing
-	$link -match '<td class="gridItem">([^<]+?)</td>' | Out-Null
-	$version = $matches[1]
-	Write-Host "Latest version `t`t$version"
-
-	# Comparing installed driver version to latest driver version from Nvidia
-	if($version -eq $ins_version) {
-		Write-Host "Latest Nvidia Drivers installed."
-		return;
-	}
-
-	# Confirm install
-	Write-Host -nonewline "New Nvidia Driver $version found. Continue with install? (Y/N) "
-	$response = read-host
-	if ( $response -ne "Y" ) { return; }
-
-	# Checking Windows version
-	if ([Environment]::OSVersion.Version -ge (new-object 'Version' 9,1)) {
-		$windowsVersion = "win10"
-	} else {
-		$windowsVersion = "win8-win7"
-	}
-
-	# Checking Windows version
-	if ((Get-WmiObject win32_operatingsystem | Select-Object osarchitecture).osarchitecture -eq "64-bit")
-	{
-		$windowsArchitecture = "64bit"
-	} else {
-		$windowsArchitecture = "32bit"
-	}
-
-	# Generating the download link
-	$url = "http://$location.download.nvidia.com/Windows/$version/$version-desktop-$windowsVersion-$windowsArchitecture-international-whql.exe"
-	Write-Host $url
-
-	# Create a new temp folder NVIDIA
-	$nvidiaTempFolder = "$extractDir\nvidia_$version"
-	New-Item -Path $nvidiaTempFolder -ItemType Directory 2>&1 | Out-Null
-
-	# Download installer
-	$dlFile = "$nvidiaTempFolder\$version.exe"
-	Write-Host "Downloading $version to $dlFile"
-	Start-BitsTransfer -Source $url -Destination $dlFile
-
-	# Extracting setup files
-	$extractFolder = "$nvidiaTempFolder\$version"
-	$filesToExtract = "Display.Driver NVI2 EULA.txt ListDevices.txt setup.cfg setup.exe"
-	Write-Host "Download finished, extracting files..."
-	if ($archiverProgram -eq "$env:programfiles\7-zip\7z.exe") {
-		Start-Process -FilePath $archiverProgram -ArgumentList "x $dlFile $filesToExtract -o""$extractFolder""" -wait
-	}
-	# Remove unneeded dependencies from setup.cfg
-	(Get-Content "$extractFolder\setup.cfg") | Where-Object {$_ -notmatch 'name="\${{(EulaHtmlFile|FunctionalConsentFile|PrivacyPolicyFile)}}'} | Set-Content "$extractFolder\setup.cfg" -Encoding UTF8 -Force
-
-	# Installing drivers
-	Write-Host "Installing $version..."
-	$install_args = "-s -noreboot -noeula -clean"
-	Start-Process -FilePath "$extractFolder\setup.exe" -ArgumentList $install_args -wait
-}
-
 # Add telemetry ips to firewall
 Function DisableTeleIps{
 	Write-Output "Adding telemetry ips to firewall"
@@ -318,9 +232,18 @@ Function RemoveCustomizeThisFolder {
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoCustomizeThisFolder" -Value 1
 }
 
-Function RemoveNewsAndInterests {
+Function DisableNewsAndInterests {
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds")) {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds" -Name "EnableFeeds" -Type DWord -Value 0
+}
+
+# https://www.askvg.com/security-alert-immediately-disable-printer-spooler-service-in-windows/
+Function DisablePrintSpooler {
+	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers")) {
+		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" -Name "RegisterSpoolerRemoteRpcEndPoint" -Type DWord -Value 2
+	HKEY_LOCAL_MACHINE
 }

@@ -1,7 +1,5 @@
 # Win10-Config
-This script removes bloatware, tidies interfaces, and increases Windows 10 performance.
-My modifications include combining similar projects and my preferred Windows 10 settings.
-Features include application update automation with Chocolatey, cleanly updating NVIDIA GPU drivers without GEForce, disabling Nagle's algorithm, and purging more telemetry services.
+This script removes bloatware, tidies interfaces, and updates/installs my preferred default programs with Chocolatey.
 
 ### Run
 1. Modify the following configuration files as needed
@@ -13,7 +11,6 @@ Features include application update automation with Chocolatey, cleanly updating
 2. Run [`Default.cmd`](./Default.cmd) as administrator.
 
 ### References
-This all-in-one script would not be possible without the knowledge shared by these talented individuals and teams.
 - https://github.com/Disassembler0/Win10-Initial-Setup-Script
 - https://github.com/chocolatey/choco
 - https://github.com/lord-carlos/nvidia-update

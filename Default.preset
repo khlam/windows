@@ -271,23 +271,25 @@ RemovePinToStartContext
 RemoveMeetNow
 
 DisableServices
-
+DisablePrintSpooler
 DisableTeleIps
-DisableTransparency
 Disablewpad
+DisableNewsAndInterests
 
 ChangeVolumeClassic
+
 GamingRegSet
+
 SetDefaultViewDetailed
+
+RemoveTextCopyPasteFormatOnStartup
+
+DefenderAttackSurfaceReduction
 
 InstallChoco
 InstallChocoPkgs
 UpdateChoco
 
-# UpdateNvidiaDrivers
-
-RemoveTextCopyPasteFormatOnStartup
-
-DefenderAttackSurfaceReduction
+DisableTransparency
 
 Restart
