@@ -175,7 +175,8 @@ ShowHiddenFiles                 # HideHiddenFiles
 # ShowSuperHiddenFiles          # HideSuperHiddenFiles
 # ShowEmptyDrives               # HideEmptyDrives
 # ShowFolderMergeConflicts      # HideFolderMergeConflicts
-EnableNavPaneExpand             # DisableNavPaneExpand
+#EnableNavPaneExpand             
+DisableNavPaneExpand
 # ShowNavPaneAllFolders         # HideNavPaneAllFolders
 # ShowNavPaneLibraries          # HideNavPaneLibraries
 # EnableFldrSeparateProcess     # DisableFldrSeparateProcess
@@ -204,8 +205,10 @@ HideMusicFromThisPC             # ShowMusicInThisPC
 HideMusicFromExplorer           # ShowMusicInExplorer
 HidePicturesFromThisPC          # ShowPicturesInThisPC
 HidePicturesFromExplorer        # ShowPicturesInExplorer
-HideVideosFromThisPC            # ShowVideosInThisPC
-HideVideosFromExplorer          # ShowVideosInExplorer
+#HideVideosFromThisPC           
+ShowVideosInThisPC
+# HideVideosFromExplorer          
+ShowVideosInExplorer
 Hide3DObjectsFromThisPC         # Show3DObjectsInThisPC
 Hide3DObjectsFromExplorer     # Show3DObjectsInExplorer
 HideNetworkFromExplorer       # ShowNetworkInExplorer

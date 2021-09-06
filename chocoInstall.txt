@@ -1,7 +1,6 @@
 firefox
 keepassxc
 git.install|--params "/NoGuiHereIntegration"
-sumatrapdf.install
 winscp
 putty.install
 7zip.install
@@ -12,3 +11,4 @@ docker-desktop
 vlc
 vscodium
 hwinfo.install
+syncthing
