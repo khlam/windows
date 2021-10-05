@@ -1,5 +1,10 @@
+> Every day I hope and pray for equilivent gaming on Linux.
+
 # Windows All-In-One Script
 Removes bloatware, tidies interfaces, and updates/installs my preferred default programs with Chocolatey.
+
+### Other
+- Enable [HyperV](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v): `Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All`
 
 ### Run
 1. Modify the following configuration files as needed
