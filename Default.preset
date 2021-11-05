@@ -143,7 +143,7 @@ ShowFileOperationsDetails       # HideFileOperationsDetails
 HideTaskbarSearch               # ShowTaskbarSearchIcon         # ShowTaskbarSearchBox
 HideTaskView                    # ShowTaskView
 ShowLargeTaskbarIcons           # ShowSmallTaskbarIcons
-SetTaskbarCombineWhenFull       # SetTaskbarCombineNever        # SetTaskbarCombineAlways
+SetTaskbarCombineNever        # SetTaskbarCombineAlways #SetTaskbarCombineWhenFull
 HideTaskbarPeopleIcon           # ShowTaskbarPeopleIcon
 ShowTrayIcons                   # HideTrayIcons
 # ShowSecondsInTaskbar          # HideSecondsFromTaskbar
@@ -273,6 +273,10 @@ RemovePinToStartContext
 
 RemoveMeetNow
 
+HideTaskBarWidgets
+HideTaskBarChat
+TaskBarAlignLeft
+
 DisableServices
 DisablePrintSpooler
 DisableTeleIps
@@ -285,7 +289,11 @@ GamingRegSet
 
 SetDefaultViewDetailed
 
-RemoveTextCopyPasteFormatOnStartup
+colors
+
+oldRightClickMenu
+
+#RemoveTextCopyPasteFormatOnStartup
 
 DefenderAttackSurfaceReduction
 

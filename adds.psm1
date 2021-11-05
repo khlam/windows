@@ -247,3 +247,36 @@ Function DisablePrintSpooler {
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" -Name "RegisterSpoolerRemoteRpcEndPoint" -Type DWord -Value 2
 	HKEY_LOCAL_MACHINE
 }
+
+# Hide Widgets Button
+Function HideTaskBarWidgets {
+	Write-Output "Hiding Widgets Task Bar button..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarDa" -Type DWord -Value 0
+}
+
+# Hide Chat Button
+Function HideTaskBarChat {
+	Write-Output "Hiding MS Teams Task Bar button..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarMn" -Type DWord -Value 0
+}
+
+# Align task bar left
+Function TaskBarAlignLeft {
+	Write-Output "Task bar left align..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Type DWord -Value 0
+}
+
+# set similar colors to windows 10: black start menu, blue accent, white windows
+Function colors {
+	Write-Output "Show Accent Color on Title Bars and Windows Borders..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "ColorPrevalence" -Type DWord -Value 1
+	Write-Output "Windows mode to dark..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "SystemUsesLightTheme" -Type DWord -Value 0
+	Write-Output "App mode to light..."
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "AppsUseLightTheme" -Type DWord -Value 1
+}
+
+# old right click menu
+Function oldRightClickMenu {
+	reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
+}
