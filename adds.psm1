@@ -51,16 +51,6 @@ Function DisableTeleIps{
 	-Action Block -RemoteAddress ($ips)
 }
 
-# Change volume control to classic style
-Function ChangeVolumeClassic {
-	Write-Output "Changing volume control to classic style..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" -Force | Out-Null
-	}
-	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" -Name "EnableMtcUvc" -Type Dword -Value 0
-}
-
-
 ## Install Chocolatey if not already installed
 Function InstallChoco {
 	Write-Host "Installing chocolatey..."
