@@ -270,3 +270,17 @@ Function colors {
 Function oldRightClickMenu {
 	reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
 }
+
+Function removeMicrosoftTeams {
+	Get-AppxPackage MicrosoftTeams* | Remove-AppxPackage
+}
+
+Function DisableWebSearchStartMenu { # does not work, but this works: https://www.groovypost.com/howto/disable-web-search-results-on-windows-11/
+	If (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
+		New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "DisableSearchBoxSuggestions" -Type DWord -Value 1
+}
+
+
+

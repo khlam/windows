@@ -268,6 +268,7 @@ UnpinStartMenuTiles
 UnpinTaskbarIcons
 
 ### Personal functions ###
+removeMicrosoftTeams
 RemoveCustomizeThisFolder
 RemovePinToStartContext
 
@@ -277,9 +278,9 @@ HideTaskBarWidgets
 HideTaskBarChat
 TaskBarAlignLeft
 
-DisableServices
+# DisableServices
 DisablePrintSpooler
-DisableTeleIps
+# DisableTeleIps
 Disablewpad
 DisableNewsAndInterests
 
