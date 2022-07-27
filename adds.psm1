@@ -21,8 +21,8 @@ Function DisableServices {
 	    #"XblAuthManager"                          # Xbox Live Auth Manager
 	    #"XblGameSave"                             # Xbox Live Game Save Service
 		#"XboxNetApiSvc"                           # Xbox Live Networking Service
-		"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
-		"ndu"                                      # Windows Network Data Usage Monitor
+		#"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
+		#"ndu"                                      # Windows Network Data Usage Monitor
 		"Spooler"								   # Print spooler
 	)
 
@@ -275,11 +275,11 @@ Function removeMicrosoftTeams {
 	Get-AppxPackage MicrosoftTeams* | Remove-AppxPackage
 }
 
-Function DisableWebSearchStartMenu { # does not work, but this works: https://www.groovypost.com/howto/disable-web-search-results-on-windows-11/
+Function DisableWebSearchStartMenu {
 	If (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
 		New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Force | Out-Null
 	}
-	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name "DisableSearchBoxSuggestions" -Type DWord -Value 1
+	Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Type DWord -Value 1
 }
 
 

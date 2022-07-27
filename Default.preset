@@ -129,13 +129,14 @@ DisableFastStartup            # EnableFastStartup
 DisableAutoRebootOnCrash      # EnableAutoRebootOnCrash
 
 ### UI Tweaks ###
-DisableActionCenter             # EnableActionCenter
+# DisableActionCenter             
+EnableActionCenter
 DisableLockScreen               # EnableLockScreen
 # DisableLockScreenRS1          # EnableLockScreenRS1
 HideNetworkFromLockScreen       # ShowNetworkOnLockScreen
 ShowShutdownOnLockScreen        # HideShutdownFromLockScreen      
 DisableLockScreenBlur           # EnableLockScreenBlur
-DisableAeroShake              # EnableAeroShake
+DisableAeroShake                # EnableAeroShake
 DisableAccessibilityKeys        # EnableAccessibilityKeys
 ShowTaskManagerDetails          # HideTaskManagerDetails
 ShowFileOperationsDetails       # HideFileOperationsDetails
@@ -278,7 +279,9 @@ HideTaskBarWidgets
 HideTaskBarChat
 TaskBarAlignLeft
 
-# DisableServices
+DisableWebSearchStartMenu
+
+DisableServices
 DisablePrintSpooler
 # DisableTeleIps
 Disablewpad
