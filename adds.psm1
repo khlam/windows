@@ -21,8 +21,8 @@ Function DisableServices {
 	    #"XblAuthManager"                          # Xbox Live Auth Manager
 	    #"XblGameSave"                             # Xbox Live Game Save Service
 		#"XboxNetApiSvc"                           # Xbox Live Networking Service
-		"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
-		"ndu"                                      # Windows Network Data Usage Monitor
+		#"WinHttpAutoProxySvc"					   # Web Proxy Auto Discovery
+		#"ndu"                                      # Windows Network Data Usage Monitor
 		"Spooler"								   # Print spooler
 	)
 
@@ -269,4 +269,22 @@ Function colors {
 # old right click menu
 Function oldRightClickMenu {
 	reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
+}
+
+Function removeMicrosoftTeams {
+	Get-AppxPackage MicrosoftTeams* | Remove-AppxPackage
+}
+
+Function DisableWebSearchStartMenu {
+	If (!(Test-Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer")) {
+		New-Item -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "DisableSearchBoxSuggestions" -Type DWord -Value 1
+}
+
+Function SetTimeUniversal {
+	If (!(Test-Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation")) {
+		New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation" -Force | Out-Null
+	}
+	Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation" -Name "RealTimeIsUniversal" -Type DWord -Value 1
 }

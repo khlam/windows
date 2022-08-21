@@ -129,13 +129,14 @@ DisableFastStartup            # EnableFastStartup
 DisableAutoRebootOnCrash      # EnableAutoRebootOnCrash
 
 ### UI Tweaks ###
-DisableActionCenter             # EnableActionCenter
+# DisableActionCenter             
+EnableActionCenter
 DisableLockScreen               # EnableLockScreen
 # DisableLockScreenRS1          # EnableLockScreenRS1
 HideNetworkFromLockScreen       # ShowNetworkOnLockScreen
 ShowShutdownOnLockScreen        # HideShutdownFromLockScreen      
 DisableLockScreenBlur           # EnableLockScreenBlur
-DisableAeroShake              # EnableAeroShake
+DisableAeroShake                # EnableAeroShake
 DisableAccessibilityKeys        # EnableAccessibilityKeys
 ShowTaskManagerDetails          # HideTaskManagerDetails
 ShowFileOperationsDetails       # HideFileOperationsDetails
@@ -268,6 +269,7 @@ UnpinStartMenuTiles
 UnpinTaskbarIcons
 
 ### Personal functions ###
+removeMicrosoftTeams
 RemoveCustomizeThisFolder
 RemovePinToStartContext
 
@@ -277,11 +279,15 @@ HideTaskBarWidgets
 HideTaskBarChat
 TaskBarAlignLeft
 
+DisableWebSearchStartMenu
+
 DisableServices
 DisablePrintSpooler
-DisableTeleIps
+# DisableTeleIps
 Disablewpad
 DisableNewsAndInterests
+
+SetTimeUniversal
 
 GamingRegSet
 
@@ -297,7 +303,7 @@ DefenderAttackSurfaceReduction
 
 InstallChoco
 InstallChocoPkgs
-UpdateChoco
+#UpdateChoco
 
 DisableTransparency
 

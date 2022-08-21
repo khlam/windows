@@ -1,15 +1,12 @@
 keepassxc
 git.install|--params "/NoGuiHereIntegration"
-winscp
-putty.install
 7zip.install
 deluge
 steam
 notepadplusplus.install
-docker-desktop
 vlc
 vscodium
 hwinfo.install
-syncthing
 googlechrome
 chromium
+firefox
